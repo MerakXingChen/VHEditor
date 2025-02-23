@@ -57,6 +57,11 @@ jobs:
           body_path: CHANGELOG_current.md
           draft: false
           prerelease: ${{ steps.build-config.outputs.is_prerelease }}
+      - name: Upload GitHub Actions artifact of vcpkg build
+      uses: actions/upload-artifact@v4
+      with:
+        name: scene-dev
+        path: ${{ github.workspace }}/app/build/outputs/apk/release/*.apk
       - name: Upload arm64 release
         uses: actions/upload-release-asset@v1
         env:
@@ -93,12 +98,3 @@ jobs:
           asset_name: VHSCode--x86---${{ steps.build-config.outputs.version_name }}.apk
           asset_path: ./app/build/outputs/apk/release/app-x86-release.apk
           asset_content_type: application/vnd.android.package-archive
-      - name: Upload GooglePlay bundle
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: VHSCode-gplay-${{ steps.build-config.outputs.version_name }}.aab
-          asset_path: ./app/build/outputs/bundle/release/app-release.aab
-          asset_content_type: application/x-authorware-bin
