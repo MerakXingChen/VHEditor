@@ -48,6 +48,5 @@ jobs:
            git log -p -n1 -- CHANGELOG.md  | grep -Po '(?<=^\+)(?!\+\+).*' > CHANGELOG_current.md
       - name: Upload GitHub Actions artifact of vcpkg build
         uses: actions/upload-artifact@v4
-        with:
-        name: scene-dev
+        name: Build Android CI
         path: ${{ github.workspace }}/app/build/outputs/apk/release/*.apk
